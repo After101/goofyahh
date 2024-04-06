@@ -3,8 +3,8 @@
 #include <AsyncTCP.h>
 #include <AsyncWebSocket.h>
 
-const char *ssid = "AEAEA";
-const char *password = "AHAHA";
+const char *ssid = "Verma_act_5G_EXT";
+const char *password = "Verma2024";
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
