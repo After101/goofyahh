@@ -10,6 +10,12 @@
     <div id="response"></div>
 
     <script>
+        const socket = new WebSocket('ws://<ESP32_IP_ADDRESS>/ws');
+
+        socket.onopen = function(event) {
+            console.log('WebSocket connected');
+        };
+
         document.getElementById('ledOn').addEventListener('click', function() {
             sendData('LED_ON');
         });
@@ -19,19 +25,8 @@
         });
 
         function sendData(command) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        document.getElementById('response').innerText = 'Command executed successfully.';
-                    } else {
-                        document.getElementById('response').innerText = 'Error executing command.';
-                    }
-                }
-            };
-            xhr.open('POST', '/arduino', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({ command: command }));
+            socket.send(command);
+            document.getElementById('response').innerText = 'Command sent: ' + command;
         }
     </script>
 </body>
